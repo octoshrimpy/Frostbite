@@ -1,8 +1,10 @@
 package com.altechmc.plugins.frostbite;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -13,18 +15,29 @@ public class HeatHandler {
     private int maxheat;
     private Player player;
     
+    private static HashMap<Player, HeatHandler> playerMap = new HashMap<Player, HeatHandler>();
+    
     public HeatHandler(Player p){
         heat = 100;
         maxheat = 100;
         this.player = p;
-    }    
+        playerMap.put(this.player, this);
+    }
+    
+    public HeatHandler getHandlerByPlayer(Player p){
+        return playerMap.get(p);
+    }
     
     public void setHeat(int heat){
         this.heat = heat;
+        HeatChangedEvent hc = new HeatChangedEvent(this);
+        Bukkit.getPluginManager().callEvent(hc);
     }
     
     public void setMaxHeat(int mh){
         this.maxheat = mh;
+        HeatChangedEvent hc = new HeatChangedEvent(this);
+        Bukkit.getPluginManager().callEvent(hc);
     }
     
     public int getHeat(){
@@ -37,11 +50,15 @@ public class HeatHandler {
     
     public int addHeat(int heat){
         this.heat += heat;
+        HeatChangedEvent hc = new HeatChangedEvent(this);
+        Bukkit.getPluginManager().callEvent(hc);
         return heat;
     }
     
     public int removeHeat(int heat){
         this.heat -= heat;
+        HeatChangedEvent hc = new HeatChangedEvent(this);
+        Bukkit.getPluginManager().callEvent(hc);
         return heat;
     }
     
@@ -72,6 +89,14 @@ public class HeatHandler {
     
     public int tickHeat(){
         return addHeat(getNetHeat());
+    }
+    
+    public void updateArmorRating(){
+        //TODO: Get armor and set max heat
+    }
+    
+    public Player getPlayer(){
+        return player;
     }
 
 }
