@@ -17,8 +17,7 @@ public class HeatHandler {
         heat = 100;
         maxheat = 100;
         this.player = p;
-    }
-    
+    }    
     
     public void setHeat(int heat){
         this.heat = heat;
