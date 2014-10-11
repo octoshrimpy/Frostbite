@@ -14,6 +14,7 @@ public class HeatHandler {
     private int heat;
     private int maxheat;
     private Player player;
+    private boolean immune;
     
     private static HashMap<Player, HeatHandler> playerMap = new HashMap<Player, HeatHandler>();
     
@@ -22,10 +23,16 @@ public class HeatHandler {
         maxheat = 100;
         this.player = p;
         playerMap.put(this.player, this);
+        updateArmorRating();
+        immune = false;
     }
     
-    public HeatHandler getHandlerByPlayer(Player p){
+    public static HeatHandler getHandlerByPlayer(Player p){
         return playerMap.get(p);
+    }
+    
+    public void setImmune(boolean im){
+        this.immune = im;
     }
     
     public void setHeat(int heat){
@@ -88,7 +95,11 @@ public class HeatHandler {
     }
     
     public int tickHeat(){
-        return addHeat(getNetHeat());
+        if(!immune){
+            return addHeat(getNetHeat());
+        }else{
+            return maxheat;
+        }
     }
     
     public void updateArmorRating(){
