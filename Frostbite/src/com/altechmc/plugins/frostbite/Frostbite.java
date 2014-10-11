@@ -4,6 +4,24 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 
 public class Frostbite extends JavaPlugin {
-    //This is a test comment for my commit.
-    //This is a second test...
+    
+    ConfigHandler config;
+    static Frostbite instance;
+    
+    public void onEnable(){
+        this.instance = this;
+        config = new ConfigHandler();
+    }
+    
+    public void onDisable(){
+        
+    }
+    
+    public ConfigHandler getConfigHandler(){
+        return config;
+    }
+    
+    public static Frostbite getInstance(){
+        return instance;
+    }
 }
