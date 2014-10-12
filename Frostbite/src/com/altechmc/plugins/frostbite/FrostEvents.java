@@ -1,6 +1,7 @@
 package com.altechmc.plugins.frostbite;
 
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,6 +37,7 @@ public class FrostEvents implements Listener{
     public void onHeatChanged(HeatChangedEvent e){
         Player p = e.getPlayer();
         int heat = e.getHeatHandle().getHeat();
+
         //TODO: Setup XP visual codes
         //TODO: Setup negative effects
     }

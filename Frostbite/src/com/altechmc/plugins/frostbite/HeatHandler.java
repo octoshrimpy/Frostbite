@@ -29,6 +29,8 @@ public class HeatHandler {
     private boolean immune;
     @NotNull
     String UUID;
+    @NotNull
+    int threshold;
     
     private Player player;
     
@@ -44,6 +46,23 @@ public class HeatHandler {
         UUID = p.getUniqueId().toString();
     }
     
+    public void setThreshold(int thresh){
+        this.threshold = thresh;
+    }
+    
+    public int getThreshold(){
+        return threshold;
+    }
+    
+    public void setImmune(boolean im){
+        this.immune = im;
+    }
+    
+    public boolean getImmune(){
+        return immune;
+    }
+    
+    
     public static void addHandler(HeatHandler hh, Player p){
         playerMap.put(p, hh);
     }
@@ -52,9 +71,6 @@ public class HeatHandler {
         return playerMap.get(p);
     }
     
-    public void setImmune(boolean im){
-        this.immune = im;
-    }
     
     public void setHeat(int heat){
         this.heat = heat;

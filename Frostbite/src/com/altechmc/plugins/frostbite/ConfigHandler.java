@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public class ConfigHandler {
     int maxRange;
+    int verboseRate;
     public HashMap<Material, Integer[]> heatblocks = new HashMap<Material, Integer[]>();
     public HashMap<Material, Integer[]> coolblocks = new HashMap<Material, Integer[]>();
     

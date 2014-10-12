@@ -29,8 +29,7 @@ public class Frostbite extends JavaPlugin {
     
     @Override
     public boolean onCommand(CommandSender sender, Command command, String cmd, String[] args){
-        return false;
-        //TODO: Commands
+        return CommandHandler.executeCommand(cmd, args, sender);
     }
     
     public ConfigHandler getConfigHandler(){
