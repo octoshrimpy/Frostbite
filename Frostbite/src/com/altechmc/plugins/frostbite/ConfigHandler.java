@@ -1,9 +1,11 @@
 package com.altechmc.plugins.frostbite;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class ConfigHandler {
     int maxRange;
@@ -11,6 +13,7 @@ public class ConfigHandler {
     public HashMap<Material, Integer[]> coolblocks = new HashMap<Material, Integer[]>();
     
     public ConfigHandler(){
-        //TODO: Get data from config file
+        FileConfiguration conf = Frostbite.getInstance().getConfig();
+        //TODO: Get Configs
     }
 }

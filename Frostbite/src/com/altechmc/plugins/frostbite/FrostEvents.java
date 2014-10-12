@@ -1,10 +1,12 @@
 package com.altechmc.plugins.frostbite;
 
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class FrostEvents implements Listener{
 
@@ -16,8 +18,18 @@ public class FrostEvents implements Listener{
     
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
-        new HeatHandler(e.getPlayer());
-        //e.getPlayer().setExp(100);
+        
+        HeatHandler hnd = (HeatHandler)instance.getDatabase().find(HeatHandler.class).where().ieq("UUID", e.getPlayer().getUniqueId().toString()).findUnique();
+        if(hnd == null){
+            HeatHandler.addHandler(hnd, e.getPlayer());
+        }else{
+            HeatHandler newp = new HeatHandler(e.getPlayer());
+            instance.getDatabase().save(newp);
+        }
+    }
+    
+    public void onPlayerLeave(PlayerQuitEvent e){
+        instance.getDatabase().save(HeatHandler.getHandlerByPlayer(e.getPlayer()));
     }
     
     @EventHandler

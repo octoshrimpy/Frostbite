@@ -4,17 +4,33 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import com.avaje.ebean.validation.NotNull;
+
+@Entity
+@Table(name="mz_player")
 public class HeatHandler {
     
+    @Id
+    int id;
+    @NotNull
     private int heat;
+    @NotNull
     private int maxheat;
-    private Player player;
+    @NotNull
     private boolean immune;
+    @NotNull
+    String UUID;
+    
+    private Player player;
     
     private static HashMap<Player, HeatHandler> playerMap = new HashMap<Player, HeatHandler>();
     
@@ -25,6 +41,11 @@ public class HeatHandler {
         playerMap.put(this.player, this);
         updateArmorRating();
         immune = false;
+        UUID = p.getUniqueId().toString();
+    }
+    
+    public static void addHandler(HeatHandler hh, Player p){
+        playerMap.put(p, hh);
     }
     
     public static HeatHandler getHandlerByPlayer(Player p){
