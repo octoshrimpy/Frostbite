@@ -16,106 +16,24 @@ import org.bukkit.entity.Player;
 import com.avaje.ebean.validation.NotNull;
 
 @Entity
-@Table(name="mz_player")
-public class HeatHandler {
-    
-    @Id
-    int id;
-    @NotNull
-    private int heat;
-    @NotNull
-    private int maxheat;
-    @NotNull
-    private boolean immune;
-    @NotNull
-    String UUID;
-    @NotNull
-    int threshold;
-    
-    private Player player;
-    
-    private static HashMap<Player, HeatHandler> playerMap = new HashMap<Player, HeatHandler>();
-    
-    public HeatHandler(Player p){
-        heat = 100;
-        maxheat = 100;
-        this.player = p;
-        playerMap.put(this.player, this);
-        updateArmorRating();
-        immune = false;
-        UUID = p.getUniqueId().toString();
+@Table(name="frostbite_heat")
+public class HeatHandler extends PlayerHandler {
+
+    public HeatHandler(Player p) {
+        super(p);
     }
     
-    public void setThreshold(int thresh){
-        this.threshold = thresh;
-    }
-    
-    public int getThreshold(){
-        return threshold;
-    }
-    
-    public void setImmune(boolean im){
-        this.immune = im;
-    }
-    
-    public boolean getImmune(){
-        return immune;
-    }
-    
-    
-    public static void addHandler(HeatHandler hh, Player p){
-        playerMap.put(p, hh);
-    }
-    
-    public static HeatHandler getHandlerByPlayer(Player p){
-        return playerMap.get(p);
-    }
-    
-    
-    public void setHeat(int heat){
-        this.heat = heat;
-        HeatChangedEvent hc = new HeatChangedEvent(this);
-        Bukkit.getPluginManager().callEvent(hc);
-    }
-    
-    public void setMaxHeat(int mh){
-        this.maxheat = mh;
-        HeatChangedEvent hc = new HeatChangedEvent(this);
-        Bukkit.getPluginManager().callEvent(hc);
-    }
-    
-    public int getHeat(){
-        return heat;
-    }
-    
-    public int getMaxHeat(){
-        return maxheat;
-    }
-    
-    public int addHeat(int heat){
-        this.heat += heat;
-        HeatChangedEvent hc = new HeatChangedEvent(this);
-        Bukkit.getPluginManager().callEvent(hc);
-        return heat;
-    }
-    
-    public int removeHeat(int heat){
-        this.heat -= heat;
-        HeatChangedEvent hc = new HeatChangedEvent(this);
-        Bukkit.getPluginManager().callEvent(hc);
-        return heat;
-    }
-    
-    public int getNetHeat(){
+    @Override
+    public int getNet(){
         ConfigHandler config = Frostbite.getInstance().getConfigHandler();
-        
+
         int netheat = 0;
         int range = config.maxRange;
         List<Block> s = new ArrayList<Block>();
         for(int x = range * -1; x < range; x++){
             for(int y = range * -1; y < range; y++){
                 for(int z = range * -1; z < range; z++){
-                   s.add(player.getLocation().add(x,y,z).getBlock());
+                    s.add(player.getLocation().add(x,y,z).getBlock());
                 }
             }
         }
@@ -127,24 +45,19 @@ public class HeatHandler {
                 netheat -= config.coolblocks.get(b.getType())[0];
             }
         }
-        
+
         return netheat;
     }
     
-    public int tickHeat(){
-        if(!immune){
-            return addHeat(getNetHeat());
-        }else{
-            return maxheat;
-        }
+
+    public static void addHandler(HeatHandler hh, Player p){
+        playerMap.put(p, hh);
     }
     
-    public void updateArmorRating(){
-        //TODO: Get armor and set max heat
+
+    public static HeatHandler getHandlerByPlayer(Player p){
+        return (HeatHandler) playerMap.get(p);
     }
-    
-    public Player getPlayer(){
-        return player;
-    }
+
 
 }

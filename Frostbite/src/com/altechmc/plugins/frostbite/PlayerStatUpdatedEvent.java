@@ -5,16 +5,16 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 
-public class HeatChangedEvent extends Event{
+public class PlayerStatUpdatedEvent extends Event{
 
     private static final HandlerList handlers = new HandlerList();
-    private HeatHandler heats;
+    private PlayerHandler heats;
     
     public HandlerList getHandlers() {
         return handlers;
     }
     
-    public HeatChangedEvent(HeatHandler heath){
+    public PlayerStatUpdatedEvent(PlayerHandler heath){
         this.heats = heath;
     }
     
@@ -22,7 +22,7 @@ public class HeatChangedEvent extends Event{
         return heats.getPlayer();
     }
     
-    public HeatHandler getHeatHandle(){
+    public PlayerHandler getHeatHandle(){
         return heats;
     }
     

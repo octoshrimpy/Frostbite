@@ -24,7 +24,7 @@ public class CommandHandler {
                 return false;
             }
             if(args.length == 1){            
-                sender.sendMessage(ChatColor.BLUE + "Your temperature is " + HeatHandler.getHandlerByPlayer((Player)sender).getHeat());
+                sender.sendMessage(ChatColor.BLUE + "Your temperature is " + HeatHandler.getHandlerByPlayer((Player)sender).getStat());
             }else if(args.length == 3){
                 if(args[1].equalsIgnoreCase("auto")){
                     int thresh = Integer.parseInt(args[2]);
@@ -57,7 +57,7 @@ public class CommandHandler {
                 }
                 sender.sendMessage(ChatColor.BLUE + p.getDisplayName() + " warmed.");
                 HeatHandler handle = HeatHandler.getHandlerByPlayer(p);
-                handle.setHeat(handle.getMaxHeat());
+                handle.setStat(handle.getMaxStat());
             }else{
                 sender.sendMessage(ChatColor.RED + "Invalid syntax.");
             }
@@ -71,7 +71,7 @@ public class CommandHandler {
                 }
                 sender.sendMessage(ChatColor.BLUE + p.getDisplayName() + "'s max heat set to " + mh);
                 HeatHandler handle = HeatHandler.getHandlerByPlayer(p);
-                handle.setMaxHeat(mh);
+                handle.setMaxStat(mh);
             }else{
                 sender.sendMessage(ChatColor.RED + "Invalid syntax.");
             }

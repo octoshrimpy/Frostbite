@@ -34,9 +34,9 @@ public class FrostEvents implements Listener{
     }
     
     @EventHandler
-    public void onHeatChanged(HeatChangedEvent e){
+    public void onHeatChanged(PlayerStatUpdatedEvent e){
         Player p = e.getPlayer();
-        int heat = e.getHeatHandle().getHeat();
+        int heat = e.getHeatHandle().getStat();
 
         //TODO: Setup XP visual codes
         //TODO: Setup negative effects
