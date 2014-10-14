@@ -38,8 +38,8 @@ public class FrostEvents implements Listener{
         Player p = e.getPlayer();
         int heat = e.getHeatHandle().getStat();
 
-        //TODO: Setup XP visual codes
-        //TODO: Setup negative effects
+        Util.updateXPBar(heat);
+        Util.updatePlayerEffects(heat);
     }
     
    
