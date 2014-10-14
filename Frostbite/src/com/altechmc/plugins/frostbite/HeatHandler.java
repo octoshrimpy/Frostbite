@@ -33,16 +33,21 @@ public class HeatHandler extends PlayerHandler {
         for(int x = range * -1; x < range; x++){
             for(int y = range * -1; y < range; y++){
                 for(int z = range * -1; z < range; z++){
-                    s.add(player.getLocation().add(x,y,z).getBlock());
+                		s.add(player.getLocation().add(x,y,z).getBlock());
                 }
             }
         }
         for(Block b : s){
+        	double dist = b.getLocation().distance(player.getLocation());
             if(config.heatblocks.containsKey(b.getType())){
-                netheat += config.heatblocks.get(b.getType())[0];
+            	if(dist == config.heatblocks.get(b.getType())[1]){
+            		netheat += config.heatblocks.get(b.getType())[0];
+            	}
             }
             if(config.coolblocks.containsKey(b.getType())){
-                netheat -= config.coolblocks.get(b.getType())[0];
+            	if(dist == config.coolblocks.get(b.getType())[1]){
+            		netheat -= config.coolblocks.get(b.getType())[0];
+            	}
             }
         }
 

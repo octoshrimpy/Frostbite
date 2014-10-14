@@ -26,6 +26,7 @@ public class ConfigHandler {
             int range = samount;
             Integer[] dat = {amount, range};
             heatblocks.put(mat, dat);
+            if(range > maxRange) maxRange = range;
         }
         
         List<String> clist = conf.getStringList("CoolBlocks");
@@ -38,6 +39,7 @@ public class ConfigHandler {
             int range = samount;
             Integer[] dat = {amount, range};
             coolblocks.put(mat, dat);
+            if(range > maxRange) maxRange = range;
         }
     }
 }
