@@ -14,8 +14,10 @@ public class Util {
 	}
 	
 	public static void updatePlayerEffects(PlayerHandler stat){
-		for(PotionEffect e : stat.getNegativeEffects()){
-			stat.getPlayer().addPotionEffect(e, false);
+		if(stat.getStat() < stat.getHandlerByPlayer(stat.getPlayer()).getEffectLvl()){
+			for(PotionEffect e : stat.getNegativeEffects()){
+				stat.getPlayer().addPotionEffect(e, false);
+			}
 		}
 	}
 

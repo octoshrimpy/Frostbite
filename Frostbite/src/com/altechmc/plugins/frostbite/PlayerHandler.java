@@ -49,6 +49,10 @@ public abstract class PlayerHandler {
     	return type;
     }
     
+    public int getEffectLvl(){
+    	return Frostbite.getInstance().getConfigHandler().mins.get(this.getType());
+    }
+    
     public float getAdvancement(){
     	return stat/maxstat;
     }

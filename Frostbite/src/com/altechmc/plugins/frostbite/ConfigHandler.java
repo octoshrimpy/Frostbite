@@ -16,7 +16,7 @@ public class ConfigHandler {
     public HashMap<Material, Integer[]> heatblocks = new HashMap<Material, Integer[]>();
     public HashMap<Material, Integer[]> coolblocks = new HashMap<Material, Integer[]>();
     public HashMap<EnvTypes, List<PotionEffect>> effects = new HashMap<EnvTypes, List<PotionEffect>>();
-    
+    public HashMap<EnvTypes, Integer> mins = new HashMap<EnvTypes, Integer>();
     public ConfigHandler(){
         FileConfiguration conf = Frostbite.getInstance().getConfig();
 
@@ -58,6 +58,7 @@ public class ConfigHandler {
         		pef.add(effect);
         	}
         	effects.put(EnvTypes.FROST, pef);
+        	mins.put(EnvTypes.FROST, conf.getInt("Effects.EffectLevel"));
         }
         verboseRate = conf.getInt("AlertRate");
         
