@@ -1,6 +1,8 @@
 package com.altechmc.plugins.frostbite;
 
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 public class Util {
@@ -19,6 +21,11 @@ public class Util {
 				stat.getPlayer().addPotionEffect(e, false);
 			}
 		}
+	}
+	
+	public static boolean compareArmor(Item armor, ItemStack item){
+		//TODO: Compare Armor
+		return false;
 	}
 
 }

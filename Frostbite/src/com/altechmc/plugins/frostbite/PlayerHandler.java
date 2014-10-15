@@ -8,7 +8,9 @@ import javax.persistence.Id;
 
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 import com.avaje.ebean.validation.NotNull;
@@ -128,7 +130,19 @@ public abstract class PlayerHandler {
     }
     
     public void updateArmorRating(){
-        //TODO: Get armor and set max heat
+    	HashMap<ArmorLevel, List<Item>> hmap = Frostbite.getInstance().getConfigHandler().armor.get(this.getType());
+    	int rating = 0;
+    	for(ArmorLevel lvl : hmap.keySet()){
+    		List<Item> items = hmap.get(lvl);
+    		for(Item i : items){
+    			for(ItemStack is :this.getPlayer().getInventory().getArmorContents()){
+    				if(Util.compareArmor(i, is)){
+    					rating += Frostbite.getInstance().getConfigHandler().amap.get(lvl);
+    				}
+    			}
+    		}
+    	}
+    	this.maxstat = Frostbite.getInstance().getConfigHandler().defaultMax.get(this.getType()) + rating;
     }
     
     public Player getPlayer(){

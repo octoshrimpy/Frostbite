@@ -7,6 +7,7 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Item;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -17,6 +18,12 @@ public class ConfigHandler {
     public HashMap<Material, Integer[]> coolblocks = new HashMap<Material, Integer[]>();
     public HashMap<EnvTypes, List<PotionEffect>> effects = new HashMap<EnvTypes, List<PotionEffect>>();
     public HashMap<EnvTypes, Integer> mins = new HashMap<EnvTypes, Integer>();
+    public HashMap<EnvTypes, HashMap<ArmorLevel, List<Item>>> armor = new HashMap<EnvTypes, HashMap<ArmorLevel, List<Item>>>();
+    
+    //Not Implemented
+    public HashMap<EnvTypes, Integer> defaultMax = new HashMap<EnvTypes, Integer>();
+    public HashMap<ArmorLevel, Integer> amap = new HashMap<ArmorLevel, Integer>();
+    
     public ConfigHandler(){
         FileConfiguration conf = Frostbite.getInstance().getConfig();
 
@@ -59,6 +66,7 @@ public class ConfigHandler {
         	}
         	effects.put(EnvTypes.FROST, pef);
         	mins.put(EnvTypes.FROST, conf.getInt("Effects.EffectLevel"));
+        	defaultMax.put(EnvTypes.FROST, conf.getInt("Effects.DefaultMax"));
         }
         verboseRate = conf.getInt("AlertRate");
         

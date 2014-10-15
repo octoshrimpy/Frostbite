@@ -5,7 +5,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
+import org.bukkit.event.player.PlayerInventoryEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -45,6 +47,11 @@ public class FrostEvents implements Listener{
     @EventHandler
     public void stopXPBar(PlayerExpChangeEvent e){
     	e.getPlayer().setExp(PlayerHandler.getHandlerByPlayer(e.getPlayer()).getAdvancement());
+    }
+    
+    @EventHandler
+    public void armorChange(InventoryInteractEvent e){
+    	PlayerHandler.getHandlerByPlayer((Player) e.getWhoClicked()).updateArmorRating();
     }
     
    
