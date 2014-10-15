@@ -49,6 +49,10 @@ public abstract class PlayerHandler {
     	return type;
     }
     
+    public float getAdvancement(){
+    	return stat/maxstat;
+    }
+    
     public void setThreshold(int thresh){
         this.threshold = thresh;
     }

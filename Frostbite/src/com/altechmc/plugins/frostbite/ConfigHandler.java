@@ -45,16 +45,21 @@ public class ConfigHandler {
             coolblocks.put(mat, dat);
             if(range > maxRange) maxRange = range;
         }
-        List<String> efflist = conf.getStringList("FrostEffects");
-        List<PotionEffect> pef = new ArrayList<PotionEffect>();
-        for(String s: efflist){
-        	String type = conf.getString("FrostEffects." + s + ".Type");
-        	int dur = conf.getInt("FrostEffects." + s + ".Duration");
-        	int pow = conf.getInt("FrostEffects." + s + ".Power");
-        	PotionEffect effect = new PotionEffect(PotionEffectType.getByName(type),dur,pow);
-        	pef.add(effect);
+        List<String> etl = conf.getStringList("Effects");
+        for(EnvTypes e : EnvTypes.values()){
+        	List<String> efflist = conf.getStringList(e.name());
+        	List<PotionEffect> pef = new ArrayList<PotionEffect>();
+        	if(!conf.contains("Effects." + e.name())) continue;
+        	for(String s: efflist){
+        		String type = conf.getString("Effects." + e.name() + "." + s + ".Type");
+        		int dur = conf.getInt("Effects." + e.name() + "." + s + ".Duration");
+        		int pow = conf.getInt("Effects." + e.name() + "." + s + ".Power");
+        		PotionEffect effect = new PotionEffect(PotionEffectType.getByName(type),dur,pow);
+        		pef.add(effect);
+        	}
+        	effects.put(EnvTypes.FROST, pef);
         }
-        effects.put(EnvTypes.FROST, pef);
+        verboseRate = conf.getInt("AlertRate");
         
         
     }

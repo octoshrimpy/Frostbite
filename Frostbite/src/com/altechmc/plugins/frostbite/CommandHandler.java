@@ -56,7 +56,7 @@ public class CommandHandler {
                     return false;
                 }
                 sender.sendMessage(ChatColor.BLUE + p.getDisplayName() + " warmed.");
-                HeatHandler handle = HeatHandler.getHandlerByPlayer(p);
+                HeatHandler handle = (HeatHandler) PlayerHandler.getHandlerByPlayer(p);
                 handle.setStat(handle.getMaxStat());
             }else{
                 sender.sendMessage(ChatColor.RED + "Invalid syntax.");
@@ -70,7 +70,7 @@ public class CommandHandler {
                     return false;
                 }
                 sender.sendMessage(ChatColor.BLUE + p.getDisplayName() + "'s max heat set to " + mh);
-                HeatHandler handle = HeatHandler.getHandlerByPlayer(p);
+                HeatHandler handle = (HeatHandler) PlayerHandler.getHandlerByPlayer(p);
                 handle.setMaxStat(mh);
             }else{
                 sender.sendMessage(ChatColor.RED + "Invalid syntax.");
@@ -83,7 +83,7 @@ public class CommandHandler {
                     return false;
                 }
                 sender.sendMessage(ChatColor.BLUE + "Frostbite enabled for " + p.getDisplayName());
-                HeatHandler handle = HeatHandler.getHandlerByPlayer(p);
+                HeatHandler handle = (HeatHandler) HeatHandler.getHandlerByPlayer(p);
                 handle.setImmune(false);
             }else{
                 sender.sendMessage(ChatColor.RED + "Invalid syntax.");
@@ -96,7 +96,7 @@ public class CommandHandler {
                     return false;
                 }
                 sender.sendMessage(ChatColor.BLUE + "Frostbite disabled for " + p.getDisplayName());
-                HeatHandler handle = HeatHandler.getHandlerByPlayer(p);
+                HeatHandler handle = (HeatHandler) HeatHandler.getHandlerByPlayer(p);
                 handle.setImmune(true);
             }else{
                 sender.sendMessage(ChatColor.RED + "Invalid syntax.");

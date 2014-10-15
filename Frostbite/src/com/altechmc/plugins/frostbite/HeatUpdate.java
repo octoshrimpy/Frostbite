@@ -12,9 +12,9 @@ public class HeatUpdate implements Runnable {
     public void run() {
         
         for(Player p : Bukkit.getServer().getOnlinePlayers()){
-            HeatHandler.getHandlerByPlayer(p).tickStat();
+            PlayerHandler.getHandlerByPlayer(p).tickStat();
             if(i == Frostbite.getInstance().getConfigHandler().verboseRate){
-                if(HeatHandler.getHandlerByPlayer(p).getStat() < HeatHandler.getHandlerByPlayer(p).getThreshold()){
+                if(PlayerHandler.getHandlerByPlayer(p).getStat() < HeatHandler.getHandlerByPlayer(p).getThreshold()){
                     p.sendMessage(ChatColor.RED + "Your temperature is dopping, you should find a heat source now!");
                 }
                 i = 0;

@@ -42,8 +42,12 @@ public class FrostEvents implements Listener{
         Util.updatePlayerEffects(e.getStatHandle());
     }
     
-   
+    @EventHandler
+    public void stopXPBar(PlayerExpChangeEvent e){
+    	e.getPlayer().setExp(PlayerHandler.getHandlerByPlayer(e.getPlayer()).getAdvancement());
+    }
     
-    //TODO: Stop outside XP sources
+   
+
 
 }
