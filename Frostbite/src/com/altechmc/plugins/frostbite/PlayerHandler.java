@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 
 import com.avaje.ebean.validation.NotNull;
 
@@ -28,6 +29,7 @@ public abstract class PlayerHandler {
     int threshold;
     
     protected Player player;
+    public EnvTypes type;
     
     protected static HashMap<Player, PlayerHandler> playerMap = new HashMap<Player, PlayerHandler>();
     
@@ -39,6 +41,12 @@ public abstract class PlayerHandler {
         updateArmorRating();
         immune = false;
         UUID = p.getUniqueId().toString();
+    }
+    
+    public abstract List<PotionEffect> getNegativeEffects();
+    
+    public EnvTypes getType(){
+    	return type;
     }
     
     public void setThreshold(int thresh){
@@ -101,9 +109,7 @@ public abstract class PlayerHandler {
         return heat;
     }
     
-    public int getNet(){
-        return 0;
-    }
+    public abstract int getNet();
     
     public int tickStat(){
         if(!immune){

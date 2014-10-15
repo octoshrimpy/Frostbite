@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 
 import com.avaje.ebean.validation.NotNull;
 
@@ -21,6 +22,7 @@ public class HeatHandler extends PlayerHandler {
 
     public HeatHandler(Player p) {
         super(p);
+        this.type = EnvTypes.FROST;
     }
     
     @Override
@@ -63,6 +65,12 @@ public class HeatHandler extends PlayerHandler {
     public static HeatHandler getHandlerByPlayer(Player p){
         return (HeatHandler) playerMap.get(p);
     }
+
+	@Override
+	public List<PotionEffect> getNegativeEffects() {
+		return Frostbite.getInstance().getConfigHandler().effects.get(this.getType());
+		//return null;
+	}
 
 
 }

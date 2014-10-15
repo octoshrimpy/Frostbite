@@ -22,7 +22,7 @@ public class PlayerStatUpdatedEvent extends Event{
         return heats.getPlayer();
     }
     
-    public PlayerHandler getHeatHandle(){
+    public PlayerHandler getStatHandle(){
         return heats;
     }
     

@@ -36,10 +36,10 @@ public class FrostEvents implements Listener{
     @EventHandler
     public void onHeatChanged(PlayerStatUpdatedEvent e){
         Player p = e.getPlayer();
-        int heat = e.getHeatHandle().getStat();
+        int heat = e.getStatHandle().getStat();
 
-        Util.updateXPBar(heat);
-        Util.updatePlayerEffects(heat);
+        Util.updateXPBar(e.getStatHandle());
+        Util.updatePlayerEffects(e.getStatHandle());
     }
     
    

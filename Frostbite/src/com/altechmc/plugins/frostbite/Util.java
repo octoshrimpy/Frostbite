@@ -1,13 +1,22 @@
 package com.altechmc.plugins.frostbite;
 
+import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+
 public class Util {
 	
-	public static void updateXPBar(int stat){
-		//TODO: Set XP Bar
+	public static void updateXPBar(PlayerHandler stat){
+		int max = stat.getMaxStat();
+		int val = stat.getStat();
+		float div = val/max;
+		stat.getPlayer().setExp(div);
+		
 	}
 	
-	public static void updatePlayerEffects(int stat){
-		
+	public static void updatePlayerEffects(PlayerHandler stat){
+		for(PotionEffect e : stat.getNegativeEffects()){
+			stat.getPlayer().addPotionEffect(e, false);
+		}
 	}
 
 }
