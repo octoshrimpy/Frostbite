@@ -130,11 +130,11 @@ public abstract class PlayerHandler {
     }
     
     public void updateArmorRating(){
-    	HashMap<ArmorLevel, List<Item>> hmap = Frostbite.getInstance().getConfigHandler().armor.get(this.getType());
+    	HashMap<ArmorLevel, List<ItemStack>> hmap = Frostbite.getInstance().getConfigHandler().armor.get(this.getType());
     	int rating = 0;
     	for(ArmorLevel lvl : hmap.keySet()){
-    		List<Item> items = hmap.get(lvl);
-    		for(Item i : items){
+    		List<ItemStack> items = hmap.get(lvl);
+    		for(ItemStack i : items){
     			for(ItemStack is :this.getPlayer().getInventory().getArmorContents()){
     				if(Util.compareArmor(i, is)){
     					rating += Frostbite.getInstance().getConfigHandler().amap.get(lvl);

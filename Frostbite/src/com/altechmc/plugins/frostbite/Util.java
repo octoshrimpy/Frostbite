@@ -23,9 +23,14 @@ public class Util {
 		}
 	}
 	
-	public static boolean compareArmor(Item armor, ItemStack item){
-		//TODO: Compare Armor
-		return false;
+	public static boolean compareArmor(ItemStack armor, ItemStack item){
+		ItemStack ai = armor;
+		boolean name = ai.getItemMeta().getDisplayName().equalsIgnoreCase(item.getItemMeta().getDisplayName());
+		boolean lore = ai.getItemMeta().getLore().containsAll(item.getItemMeta().getLore());
+		boolean itid = ai.getType() == item.getType();
+		boolean valm = ai.getDurability() == item.getDurability();
+		return name && lore && itid && valm;
+		
 	}
 
 }

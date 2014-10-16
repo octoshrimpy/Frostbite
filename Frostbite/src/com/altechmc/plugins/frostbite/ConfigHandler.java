@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Item;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -18,7 +19,7 @@ public class ConfigHandler {
     public HashMap<Material, Integer[]> coolblocks = new HashMap<Material, Integer[]>();
     public HashMap<EnvTypes, List<PotionEffect>> effects = new HashMap<EnvTypes, List<PotionEffect>>();
     public HashMap<EnvTypes, Integer> mins = new HashMap<EnvTypes, Integer>();
-    public HashMap<EnvTypes, HashMap<ArmorLevel, List<Item>>> armor = new HashMap<EnvTypes, HashMap<ArmorLevel, List<Item>>>();
+    public HashMap<EnvTypes, HashMap<ArmorLevel, List<ItemStack>>> armor = new HashMap<EnvTypes, HashMap<ArmorLevel, List<ItemStack>>>();
     
     //Not Implemented
     public HashMap<EnvTypes, Integer> defaultMax = new HashMap<EnvTypes, Integer>();
@@ -54,7 +55,7 @@ public class ConfigHandler {
         }
         List<String> etl = conf.getStringList("Effects");
         for(EnvTypes e : EnvTypes.values()){
-        	List<String> efflist = conf.getStringList(e.name());
+        	List<String> efflist = conf.getStringList("Effects." + e.name());
         	List<PotionEffect> pef = new ArrayList<PotionEffect>();
         	if(!conf.contains("Effects." + e.name())) continue;
         	for(String s: efflist){
@@ -70,6 +71,32 @@ public class ConfigHandler {
         }
         verboseRate = conf.getInt("AlertRate");
         
+        //Load up Armor information
+        List<String> arl = conf.getStringList("Armor");
+        for(EnvTypes e : EnvTypes.values()){
+        	HashMap<ArmorLevel, List<ItemStack>> damp = new HashMap<ArmorLevel, List<ItemStack>>();
+        	for(ArmorLevel al : ArmorLevel.values()){
+        		List<String> armlist = conf.getStringList("Armor." + e.name() + "." + al.name());
+        		List<ItemStack> itls = new ArrayList<ItemStack>();
+        		if(!conf.contains("Armor." + e.name() + "." + al.name())) continue;
+        		for(String s: armlist){
+        			int id = conf.getInt("Armor." + e.name() + "." + al.name() + "." + s + ".ID");
+        			int dur = conf.getInt("Armor." + e.name() + "." + al.name() + "." + s + ".Durability");
+        			String name = conf.getString("Armor." + e.name() + "." + al.name() + "." + s + ".Name");
+        			String lore = conf.getString("Armor." + e.name() + "." + al.name() + "." + s + ".Lore");
+        			ItemStack i = new ItemStack(Material.getMaterial(id));
+        			i.getItemMeta().setDisplayName(name);
+        			List<String> lorel = new ArrayList<String>();
+        			lorel.add(lore);
+        			i.getItemMeta().setLore(lorel);
+        			itls.add(i);
+        		}
+        		int amt = conf.getInt("Armor." + e.name() + "." + al.name() + ".Amount");
+        		amap.put(al, amt);
+        		damp.put(al, itls);
+        	}
+        	armor.put(e, damp);
+        }
         
     }
 }
