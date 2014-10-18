@@ -59,7 +59,7 @@ public class HeatHandler extends PlayerHandler {
 
 
 	@Override
-	public List<PotionEffect> getNegativeEffects() {
+	public HashMap<PotionEffect, Integer> getNegativeEffects() {
 		return Frostbite.getInstance().getConfigHandler().effects.get(this.getType());
 		//return null;
 	}

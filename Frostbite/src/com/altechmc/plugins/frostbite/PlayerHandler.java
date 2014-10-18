@@ -45,14 +45,14 @@ public abstract class PlayerHandler {
         UUID = p.getUniqueId().toString();
     }
     
-    public abstract List<PotionEffect> getNegativeEffects();
+    public abstract HashMap<PotionEffect, Integer> getNegativeEffects();
     
     public EnvTypes getType(){
     	return type;
     }
     
-    public int getEffectLvl(){
-    	return Frostbite.getInstance().getConfigHandler().mins.get(this.getType());
+    public int getEffectLvl(PotionEffect e){
+    	return Frostbite.getInstance().getConfigHandler().effects.get(this.getType()).get(e);
     }
     
     public float getAdvancement(){
@@ -130,18 +130,17 @@ public abstract class PlayerHandler {
     }
     
     public void updateArmorRating(){
-    	HashMap<ArmorLevel, List<ItemStack>> hmap = Frostbite.getInstance().getConfigHandler().armor.get(this.getType());
+    	HashMap<ItemStack, Integer> hmap = Frostbite.getInstance().getConfigHandler().armor.get(this.getType());
     	int rating = 0;
-    	for(ArmorLevel lvl : hmap.keySet()){
-    		List<ItemStack> items = hmap.get(lvl);
-    		for(ItemStack i : items){
-    			for(ItemStack is :this.getPlayer().getInventory().getArmorContents()){
-    				if(Util.compareArmor(i, is)){
-    					rating += Frostbite.getInstance().getConfigHandler().amap.get(lvl);
-    				}
-    			}
-    		}
+    	
+    	for(ItemStack i : hmap.keySet()){
+    	    for(ItemStack is :this.getPlayer().getInventory().getArmorContents()){
+    	        if(Util.compareArmor(i, is)){
+    	            rating += hmap.get(i);
+    	        }
+    	    }
     	}
+
     	this.maxstat = Frostbite.getInstance().getConfigHandler().defaultMax.get(this.getType()) + rating;
     }
     

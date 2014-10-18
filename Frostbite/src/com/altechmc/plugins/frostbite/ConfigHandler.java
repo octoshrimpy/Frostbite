@@ -19,13 +19,11 @@ public class ConfigHandler {
     int verboseRate;
     public HashMap<Material, Integer[]> heatblocks = new HashMap<Material, Integer[]>();
     public HashMap<Material, Integer[]> coolblocks = new HashMap<Material, Integer[]>();
-    public HashMap<EnvTypes, List<PotionEffect>> effects = new HashMap<EnvTypes, List<PotionEffect>>();
-    public HashMap<EnvTypes, Integer> mins = new HashMap<EnvTypes, Integer>();
-    public HashMap<EnvTypes, HashMap<ArmorLevel, List<ItemStack>>> armor = new HashMap<EnvTypes, HashMap<ArmorLevel, List<ItemStack>>>();
+    public HashMap<EnvTypes, HashMap<PotionEffect, Integer>> effects = new HashMap<EnvTypes, HashMap<PotionEffect, Integer>>();
+    public HashMap<EnvTypes, HashMap<ItemStack, Integer>> armor = new HashMap<EnvTypes, HashMap<ItemStack, Integer>>();
     
     //Not Implemented
     public HashMap<EnvTypes, Integer> defaultMax = new HashMap<EnvTypes, Integer>();
-    public HashMap<ArmorLevel, Integer> amap = new HashMap<ArmorLevel, Integer>();
     
     public ConfigHandler(){
         FileConfiguration conf = Frostbite.getInstance().getConfig();
@@ -58,17 +56,18 @@ public class ConfigHandler {
         List<String> etl = conf.getStringList("Effects");
         for(EnvTypes e : EnvTypes.values()){
         	List<String> efflist = conf.getStringList("Effects." + e.name());
-        	List<PotionEffect> pef = new ArrayList<PotionEffect>();
+        	HashMap<PotionEffect, Integer> pef = new HashMap<PotionEffect, Integer>();
         	if(!conf.contains("Effects." + e.name())) continue;
         	for(String s: efflist){
         		String type = conf.getString("Effects." + e.name() + "." + s + ".Type");
         		int dur = conf.getInt("Effects." + e.name() + "." + s + ".Duration");
         		int pow = conf.getInt("Effects." + e.name() + "." + s + ".Power");
+        		int lvl  = conf.getInt("Effects." + e.name() + "." + s + ".Threshold");
         		PotionEffect effect = new PotionEffect(PotionEffectType.getByName(type),dur,pow);
-        		pef.add(effect);
+        		pef.put(effect, lvl);
         	}
         	effects.put(e, pef);
-        	mins.put(e, conf.getInt("EffectData.EffectLevel"));
+        	
         	defaultMax.put(e, conf.getInt("DefaultMax"));
         }
         verboseRate = conf.getInt("AlertRate");
@@ -76,30 +75,29 @@ public class ConfigHandler {
         //Load up Armor information
         List<String> arl = conf.getStringList("Armor");
         for(EnvTypes e : EnvTypes.values()){
-        	HashMap<ArmorLevel, List<ItemStack>> damp = new HashMap<ArmorLevel, List<ItemStack>>();
-        	for(ArmorLevel al : ArmorLevel.values()){
-        		List<String> armlist = conf.getStringList("Armor." + e.name() + "." + al.name());
-        		List<ItemStack> itls = new ArrayList<ItemStack>();
-        		if(!conf.contains("Armor." + e.name() + "." + al.name())) continue;
-        		for(String s: armlist){
-        			String id = conf.getString("Armor." + e.name() + "." + al.name() + "." + s + ".Name");
-        			int dur = conf.getInt("Armor." + e.name() + "." + al.name() + "." + s + ".Color");
-        			String name = conf.getString("Armor." + e.name() + "." + al.name() + "." + s + ".Name");
-        			String lore = conf.getString("Armor." + e.name() + "." + al.name() + "." + s + ".Lore");
-        			ItemStack i = new ItemStack(Material.getMaterial(id));
-        			i.getItemMeta().setDisplayName(name);
-        			List<String> lorel = new ArrayList<String>();
-        			lorel.add(lore);
-        			i.getItemMeta().setLore(lorel);
-        			LeatherArmorMeta im = (LeatherArmorMeta) i.getItemMeta();
-        			im.setColor(org.bukkit.Color.fromRGB(dur));
-        			itls.add(i);
-        		}
-        		int amt = conf.getInt("Armor." + e.name() + "." + al.name() + ".Amount");
-        		amap.put(al, amt);
-        		damp.put(al, itls);
-        	}
-        	armor.put(e, damp);
+
+            List<String> armlist = conf.getStringList("Armor." + e.name() + ".");
+            HashMap<ItemStack, Integer> itls = new HashMap<ItemStack, Integer>();
+            if(!conf.contains("Armor." + e.name())) continue;
+            for(String s: armlist){
+                String id = conf.getString("Armor." + e.name() + "." + "." + s + ".Name");
+                int dur = conf.getInt("Armor." + e.name() + "." + "." + s + ".Color");
+                int amt = conf.getInt("Armor." + e.name() + "." + "." + s + ".Amount");
+                String name = conf.getString("Armor." + e.name() + "." + "." + s + ".Name");
+                String lore = conf.getString("Armor." + e.name() + "." + "." + s + ".Lore");
+                ItemStack i = new ItemStack(Material.getMaterial(id));
+                i.getItemMeta().setDisplayName(name);
+                List<String> lorel = new ArrayList<String>();
+                lorel.add(lore);
+                i.getItemMeta().setLore(lorel);
+                LeatherArmorMeta im = (LeatherArmorMeta) i.getItemMeta();
+                im.setColor(org.bukkit.Color.fromRGB(dur));
+                itls.put(i,amt);
+            }
+            int amt = conf.getInt("Armor." + e.name() + "." + ".Amount");
+
+
+            armor.put(e, itls);
         }
         
     }

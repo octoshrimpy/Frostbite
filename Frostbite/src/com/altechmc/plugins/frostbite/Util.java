@@ -16,11 +16,12 @@ public class Util {
 	}
 	
 	public static void updatePlayerEffects(PlayerHandler stat){
-		if(stat.getStat() < stat.getHandlerByPlayer(stat.getPlayer()).getEffectLvl()){
-			for(PotionEffect e : stat.getNegativeEffects()){
-				stat.getPlayer().addPotionEffect(e, false);
-			}
-		}
+
+	    for(PotionEffect e : stat.getNegativeEffects().keySet()){
+	        if(stat.getStat() < stat.getHandlerByPlayer(stat.getPlayer()).getEffectLvl(e)){
+	            stat.getPlayer().addPotionEffect(e, false);
+	        }
+	    }
 	}
 	
 	public static boolean compareArmor(ItemStack armor, ItemStack item){

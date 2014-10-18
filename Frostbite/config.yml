@@ -17,16 +17,12 @@ Effects:
             Type:'CONFUSION'
             Duration: 20
             Power: 100
-EffectData:
-    EffectLevel:2
+            Threshold: 4
 Armor:
     FROST:
-        SUPER:
-            - superhelm
-                ID:'LEATHER_CHESTPLATE'
-                Color:511
-                Name:'Super Helm'
-                Lore:
+        - superhelm
+            ID:'LEATHER_CHESTPLATE'
+            Color:511
+            Name:'Super Helm'
+            Lore:
             Amount:5
-        
-        
