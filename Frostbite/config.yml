@@ -1,0 +1,32 @@
+DefaultMax:100
+AlertRate: 60
+DefaultMax: 100
+HeatBlocks:
+    - lava
+        Type:'LAVA'
+        Rate:2
+        Range:5
+CoolBlocks:
+    - ice
+        Type:'ICE'
+        Rate:3
+        Range:5
+Effects:
+    FROST:
+        - nausea
+            Type:'CONFUSION'
+            Duration: 20
+            Power: 100
+EffectData:
+    EffectLevel:2
+Armor:
+    FROST:
+        SUPER:
+            - superhelm
+                ID:'LEATHER_CHESTPLATE'
+                Color:511
+                Name:'Super Helm'
+                Lore:
+            Amount:5
+        
+        

@@ -18,6 +18,7 @@ public class Frostbite extends JavaPlugin {
     public void onEnable(){
         this.instance = this;
         config = new ConfigHandler();
+        
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new HeatUpdate(), 40, 40);
     }
     

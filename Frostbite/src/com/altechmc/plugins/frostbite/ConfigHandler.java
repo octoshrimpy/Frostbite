@@ -1,5 +1,6 @@
 package com.altechmc.plugins.frostbite;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -65,9 +67,9 @@ public class ConfigHandler {
         		PotionEffect effect = new PotionEffect(PotionEffectType.getByName(type),dur,pow);
         		pef.add(effect);
         	}
-        	effects.put(EnvTypes.FROST, pef);
-        	mins.put(EnvTypes.FROST, conf.getInt("Effects.EffectLevel"));
-        	defaultMax.put(EnvTypes.FROST, conf.getInt("Effects.DefaultMax"));
+        	effects.put(e, pef);
+        	mins.put(e, conf.getInt("EffectData.EffectLevel"));
+        	defaultMax.put(e, conf.getInt("DefaultMax"));
         }
         verboseRate = conf.getInt("AlertRate");
         
@@ -80,8 +82,8 @@ public class ConfigHandler {
         		List<ItemStack> itls = new ArrayList<ItemStack>();
         		if(!conf.contains("Armor." + e.name() + "." + al.name())) continue;
         		for(String s: armlist){
-        			int id = conf.getInt("Armor." + e.name() + "." + al.name() + "." + s + ".ID");
-        			int dur = conf.getInt("Armor." + e.name() + "." + al.name() + "." + s + ".Durability");
+        			String id = conf.getString("Armor." + e.name() + "." + al.name() + "." + s + ".Name");
+        			int dur = conf.getInt("Armor." + e.name() + "." + al.name() + "." + s + ".Color");
         			String name = conf.getString("Armor." + e.name() + "." + al.name() + "." + s + ".Name");
         			String lore = conf.getString("Armor." + e.name() + "." + al.name() + "." + s + ".Lore");
         			ItemStack i = new ItemStack(Material.getMaterial(id));
@@ -89,6 +91,8 @@ public class ConfigHandler {
         			List<String> lorel = new ArrayList<String>();
         			lorel.add(lore);
         			i.getItemMeta().setLore(lorel);
+        			LeatherArmorMeta im = (LeatherArmorMeta) i.getItemMeta();
+        			im.setColor(org.bukkit.Color.fromRGB(dur));
         			itls.add(i);
         		}
         		int amt = conf.getInt("Armor." + e.name() + "." + al.name() + ".Amount");

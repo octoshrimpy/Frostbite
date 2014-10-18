@@ -1,0 +1,8 @@
+name: Frostbite
+main: com.altechmc.plugins.frostbite.Frostbite
+version: 1.0
+description: >
+             RPG Level Survival Plugin
+commands:
+  ws:
+    description: Main command.
